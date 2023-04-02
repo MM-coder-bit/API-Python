@@ -49,6 +49,15 @@ def obter_livros_id(id):
             return "ID não encontrado"
     
 # Editar
+@app.route('/livros/<int:id>',methods=['PUT']) # Adicionado rota para a editar o livro pelo ID (tipo INT), com apenas o PUT
+
+def editar_livro_id(id):
+    livro_alterado = request.get_json()           # faz a requisição do JSON e adiciona na var 'livro alterado'
+    for indice,livro in enumerate(livros):        # percorre todos os livros usando o método enumerate() para incdicar qual o index atual
+        if livro.get('id') == id:
+            livros[indice].update(livro_alterado) # atualiza com a nova informação
+            return jsonify(livros[indice])
+        
 # Excluir
 
 app.run(port=5000,host='localhost',debug=True) # URL para as requisições = 'http://localhost:5000/livros'
