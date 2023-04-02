@@ -33,12 +33,22 @@ livros = [
             },
          ]
 # Consultar (Todos)
-@app.route('/livros',methods=['GET'])
+@app.route('/livros',methods=['GET']) # Adicionado rota para a consulta do livros, com apenas o GET
+
 def obter_livros():
     return jsonify(livros)
-    
+
 # Consultar (Id)
+@app.route('/livros/<int:id>',methods=['GET']) # Adicionado rota para a consulta do livro pelo ID (tipo INT), com apenas o GET
+
+def obter_livros_id(id):
+    for livro in livros:                       # percorre todos os livros
+        if livro.get('id') == id:              # verifica se o ID foi encontrado
+            return jsonify(livro)
+        else:
+            return "ID não encontrado"
+    
 # Editar
 # Excluir
 
-app.run(port=5000,host='localhost',debug=True)
+app.run(port=5000,host='localhost',debug=True) # URL para as requisições = 'http://localhost:5000/livros'
