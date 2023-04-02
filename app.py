@@ -33,10 +33,10 @@ livros = [
             },
          ]
 # Consultar (Todos)
-@app.route('/livros',methods=['GET']) # Adicionado rota para a consulta do livros, com apenas o GET
+@app.route('/livros',methods=['GET'])  # Adicionado rota para a consulta do livros, com apenas o GET
 
 def obter_livros():
-    return jsonify(livros)
+    return jsonify(livros)             # retorna todos os livros
 
 # Consultar (Id)
 @app.route('/livros/<int:id>',methods=['GET']) # Adicionado rota para a consulta do livro pelo ID (tipo INT), com apenas o GET
@@ -47,9 +47,9 @@ def obter_livros_id(id):
             return jsonify(livro)
         else:
             return "ID não encontrado"
-    
+
 # Editar
-@app.route('/livros/<int:id>',methods=['PUT']) # Adicionado rota para a editar o livro pelo ID (tipo INT), com apenas o PUT
+@app.route('/livros/<int:id>',methods=['PUT'])    # Adicionado rota para a editar o livro pelo ID (tipo INT), com apenas o PUT
 
 def editar_livro_id(id):
     livro_alterado = request.get_json()           # faz a requisição do JSON e adiciona na var 'livro alterado'
@@ -57,7 +57,16 @@ def editar_livro_id(id):
         if livro.get('id') == id:
             livros[indice].update(livro_alterado) # atualiza com a nova informação
             return jsonify(livros[indice])
-        
+
+# Criar
+@app.route('/livros',methods=['POST'])
+
+def incluir_livro():
+    novo_livro = request.get_json()
+    livros.append(novo_livro)
+
+    return jsonify(livros)
+
 # Excluir
 
 app.run(port=5000,host='localhost',debug=True) # URL para as requisições = 'http://localhost:5000/livros'
